@@ -8,3 +8,5 @@ RUN git clone --depth 1 --branch master https://github.com/ROCmSoftwarePlatform/
    && pip install -e . \
    && cd /workspace/transformers/examples/pytorch \
    && pip install -r _tests_requirements.txt
+
+COPY scripts/ scripts
