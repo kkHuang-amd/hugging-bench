@@ -1,0 +1,10 @@
+ARG BASE_DOCKER=rocm/pytorch:latest-release
+FROM ${BASE_DOCKER}
+
+WORKDIR /workspace
+
+RUN git clone --depth 1 --branch master https://github.com/ROCmSoftwarePlatform/transformers \
+   && cd /workspace/transformers \
+   && pip install -e . \
+   && cd /workspace/transformers/examples/pytorch \
+   && pip install -r _tests_requirements.txt
