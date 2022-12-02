@@ -13,14 +13,6 @@ case ${gpu_architecture} in
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
 esac
 
-# Workaround for https://ontrack-internal.amd.com/browse/SWDEV-317794
-# for var in "$@"; do 
-#     if [ "$var" == "--ort" ]; then
-#         patch src/transformers/models/deberta_v2/modeling_deberta_v2.py deberta_softmax_backward.patch
-#         patch $HF_PATH/src/transformers/models/deberta_v2/modeling_deberta_v2.py deberta_softmax_backward.patch
-#     fi
-# done
-
 python3 /workspace/transformers/examples/pytorch/text-classification/run_glue.py \
 	--model_name_or_path microsoft/deberta-v2-xlarge \
 	--task_name MRPC \
