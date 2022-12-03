@@ -10,6 +10,7 @@ docker build -f Dockerfile_rocm -t hugging-bench:latest .
 
 CUDA:
 ```
+docker build -f Dockerfile_cuda -t hugging-bench:cuda-latest .
 ```
 
 ## Running Docker container
