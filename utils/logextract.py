@@ -35,9 +35,7 @@ def extract(log_file:str) -> dict:
     def generate_metric_re_string(metric:str) -> str:
         return f'\s*{metric}\s*=\s*(.*)\s*'
 
-    re_strings = []
-    for metric in train_metrics:
-        re_strings.append( generate_metric_re_string(metric) )
+    re_strings = [ generate_metric_re_string(metric) for metric in train_metrics ]
     
     for line in lines[i_metrics:]:
         for metric, re_string in zip(train_metrics, re_strings):
