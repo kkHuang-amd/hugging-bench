@@ -5,16 +5,17 @@ echo "GPU Vendor: ${gpu_vendor}"
 echo "GPU architecture: ${gpu_architecture}"
 
 case ${gpu_architecture} in
-    $MI200) batch_size=24; break;;
-    $MI100) batch_size=16; break;;
-    $MI50) batch_size=1; break;;
-    $A100) batch_size=8; break;;
-    $V100) batch_size=1; break;;
+    $MI200) batch_size=24;;
+    $MI100) batch_size=16;;
+    $MI50) batch_size=1;;
+    $A100) batch_size=8;;
+    $V100) batch_size=1;;
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
 esac
 
+export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
-python3 /workspace/transformers/examples/pytorch/language-modeling/run_mlm.py \
+python /workspace/transformers/examples/pytorch/language-modeling/run_mlm.py \
     --model_name_or_path bert-large-uncased \
     --dataset_name wikitext \
     --dataset_config_name wikitext-2-raw-v1 \

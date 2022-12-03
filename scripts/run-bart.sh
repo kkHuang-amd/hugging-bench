@@ -5,15 +5,17 @@ echo "GPU Vendor: ${gpu_vendor}"
 echo "GPU architecture: ${gpu_architecture}"
 
 case ${gpu_architecture} in
-    $MI200) batch_size=24; break;;
-    $MI100) batch_size=16; break;;
-    $MI50) batch_size=2; break;;
-    $A100) batch_size=16; break;;
-    $V100) batch_size=2; break;;
+    $MI200) batch_size=24;;
+    $MI100) batch_size=16;;
+    $MI50) batch_size=2;;
+    $A100) batch_size=16;;
+    $V100) batch_size=2;;
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
 esac
 
-python3 /workspace/transformers/examples/pytorch/translation/run_translation.py \
+export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
+
+python /workspace/transformers/examples/pytorch/translation/run_translation.py \
         --dataset_name wmt16 \
        --dataset_config ro-en \
        --model_name_or_path facebook/bart-large \

@@ -5,15 +5,17 @@ echo "GPU Vendor: ${gpu_vendor}"
 echo "GPU architecture: ${gpu_architecture}"
 
 case ${gpu_architecture} in
-    $MI200) batch_size=22; break;;
-    $MI100) batch_size=8; break;;
-    $MI50) batch_size=4; break;;
-    $A100) batch_size=8; break;;
-    $V100) batch_size=4; break;;
+    $MI200) batch_size=22;;
+    $MI100) batch_size=8;;
+    $MI50) batch_size=4;;
+    $A100) batch_size=8;;
+    $V100) batch_size=4;;
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
 esac
 
 NGCDS=8
+
+export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
 python3 -m torch.distributed.launch --nproc_per_node=$NGCDS /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
     --output_dir output \

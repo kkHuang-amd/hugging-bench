@@ -5,15 +5,17 @@ echo "GPU Vendor: ${gpu_vendor}"
 echo "GPU architecture: ${gpu_architecture}"
 
 case ${gpu_architecture} in
-    $MI200) batch_size=2; break;;
-    $MI100) batch_size=1; break;;
-    $MI50) batch_size=1; break;;
-    $A100) batch_size=1; break;;
-    $V100) batch_size=1; break;;
+    $MI200) batch_size=2;;
+    $MI100) batch_size=1;;
+    $MI50) batch_size=1;;
+    $A100) batch_size=1;;
+    $V100) batch_size=1;;
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
 esac
 
-python3 /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
+export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
+
+python /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
     --output_dir output \
     --model_name_or_path bigscience/bloom-560m  \
     --dataset_name wikitext \

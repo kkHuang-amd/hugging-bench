@@ -5,15 +5,17 @@ echo "GPU Vendor: ${gpu_vendor}"
 echo "GPU architecture: ${gpu_architecture}"
 
 case ${gpu_architecture} in
-    $MI200) batch_size=20; break;;
-    $MI100) batch_size=1; break;;
-    $MI50) batch_size=1; break;;
-    $A100) batch_size=12; break;;
-    $V100) batch_size=1; break;;
+    $MI200) batch_size=20;;
+    $MI100) batch_size=1;;
+    $MI50) batch_size=1;;
+    $A100) batch_size=12;;
+    $V100) batch_size=1;;
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
 esac
 
-python3 /workspace/transformers/examples/pytorch/summarization/run_summarization.py \
+export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
+
+python /workspace/transformers/examples/pytorch/summarization/run_summarization.py \
     --model_name_or_path google/pegasus-xsum \
     --dataset_name xsum \
     --max_steps 150 \
