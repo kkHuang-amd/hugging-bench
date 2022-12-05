@@ -15,7 +15,13 @@ esac
 
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
-python /workspace/transformers/examples/pytorch/translation/run_translation.py \
+# Load user-specified parameters
+source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
+
+# Print parameters
+echo "Number of GCDs: ${NGCD}"
+
+python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/translation/run_translation.py \
 	--source_prefix "translate English to Romanian:"  \
 	--dataset_name wmt16 \
 	--dataset_config ro-en \
@@ -33,7 +39,7 @@ python /workspace/transformers/examples/pytorch/translation/run_translation.py \
 	--fp16 \
 	--max_steps 150 \
 	--skip_memory_metrics=True \
-    "$@" \
+    # "$@" \
     2>&1 | tee log.txt
 
 # output performance metric

@@ -15,7 +15,13 @@ esac
 
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
-python /workspace/transformers/examples/pytorch/summarization/run_summarization.py \
+# Load user-specified parameters
+source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
+
+# Print parameters
+echo "Number of GCDs: ${NGCD}"
+
+python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/summarization/run_summarization.py \
     --model_name_or_path google/pegasus-xsum \
     --dataset_name xsum \
     --max_steps 150 \
@@ -23,10 +29,10 @@ python /workspace/transformers/examples/pytorch/summarization/run_summarization.
 	--output_dir /tmp/tst-summarization \
 	--per_device_train_batch_size=$batch_size \
 	--per_device_eval_batch_size=1 \
-        --overwrite_output_dir \
-        --predict_with_generate \
+    --overwrite_output_dir \
+    --predict_with_generate \
 	--max_source_length 512 \
-        "$@" \
+        # "$@" \
 	2>&1 | tee log.txt
 
 # output performance metric

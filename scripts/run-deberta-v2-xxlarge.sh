@@ -23,7 +23,13 @@ esac
 
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
-python /workspace/transformers/examples/pytorch/text-classification/run_glue.py \
+# Load user-specified parameters
+source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
+
+# Print parameters
+echo "Number of GCDs: ${NGCD}"
+
+python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/text-classification/run_glue.py \
 	--model_name_or_path microsoft/deberta-v2-xlarge \
 	--task_name MRPC \
 	--do_train \
@@ -36,7 +42,7 @@ python /workspace/transformers/examples/pytorch/text-classification/run_glue.py 
 	--logging_steps 1 \
 	--fp16 \
 	--skip_memory_metrics=True \
-        "$@" \
+        # "$@" \
     2>&1 | tee log-deberta-v2-xxlarge.txt
 
 # output performance metric

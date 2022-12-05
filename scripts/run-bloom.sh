@@ -15,7 +15,13 @@ esac
 
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
-python /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
+# Load user-specified parameters
+source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
+
+# Print parameters
+echo "Number of GCDs: ${NGCD}"
+
+python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
     --output_dir output \
     --model_name_or_path bigscience/bloom-560m  \
     --dataset_name wikitext \
@@ -33,5 +39,5 @@ python /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
     --per_device_eval_batch_size=$batch_size \
     --overwrite_output_dir \
     --max_steps 150 \
-     "$@" \
-    2>&1 | tee log.txt
+    #  "$@" \
+    # 2>&1 | tee log.txt
