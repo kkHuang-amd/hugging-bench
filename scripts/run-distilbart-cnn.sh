@@ -5,15 +5,17 @@ echo "GPU Vendor: ${gpu_vendor}"
 echo "GPU architecture: ${gpu_architecture}"
 
 case ${gpu_architecture} in
-    $MI200) batch_size=40; break;;
-    $MI100) batch_size=4; break;;
-    $MI50) batch_size=4; break;;
-    $A100) batch_size=20; break;;
-    $V100) batch_size=4; break;;
+    $MI200) batch_size=40;;
+    $MI100) batch_size=4;;
+    $MI50) batch_size=4;;
+    $A100) batch_size=20;;
+    $V100) batch_size=4;;
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
 esac
 
-python3 /workspace/transformers/examples/pytorch/summarization/run_summarization.py \
+export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
+
+python /workspace/transformers/examples/pytorch/summarization/run_summarization.py \
         --model_name_or_path sshleifer/distilbart-cnn-6-6 \
         --dataset_name xsum \
         --max_steps 150 \
