@@ -12,6 +12,16 @@ train_metrics = [
 ]
 metrics_line = r'***** train metrics *****'
 
+def convertValue(valstr):
+    # Return the value as an int, float, or string according to the contents
+    try:
+        return int(valstr)
+    except ValueError:
+        try:
+            return float(valstr)
+        except ValueError:
+            return valstr
+
 
 def extract(log_file:str) -> dict:
     out = {}
@@ -35,16 +45,16 @@ def extract(log_file:str) -> dict:
     def generate_metric_re_string(metric:str) -> str:
         return f'\s*{metric}\s*=\s*(.*)\s*'
 
-    re_strings = [ generate_metric_re_string(metric) for metric in train_metrics ]
+    re_strings = []
+    for metric in train_metrics:
+        re_strings.append( generate_metric_re_string(metric) )
     
     for line in lines[i_metrics:]:
         for metric, re_string in zip(train_metrics, re_strings):
             g = re.match(re_string, line)
             if g:
-                out[metric] = g.groups()[0]
+                out[metric] = convertValue(g.groups()[0])
                 break
-
-    print(out)
 
     return out
 
@@ -59,7 +69,8 @@ def parse_args():
 def main():
     args = parse_args()
     train_metrics = extract(args.log_file)
+    print(json.dumps(train_metrics))
 
 
 if __name__ == '__main__':
-    main() 
+    main()
