@@ -13,10 +13,10 @@ case ${gpu_architecture} in
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
 esac
 
-NGCDS=8
+NGCD=8
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
-python -m torch.distributed.launch --nproc_per_node=$NGCDS /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
+python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
     --output_dir output \
     --model_name_or_path EleutherAI/gpt-neo-1.3B \
     --dataset_name wikitext \
