@@ -17,7 +17,7 @@ NGCD=8
 
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
-python3 -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
+python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
     --output_dir output \
     --model_name_or_path gpt2 \
     --dataset_name wikitext \
