@@ -7,13 +7,13 @@ NGCD=8
 while [ ! -z "$1" ]; do
     case $1 in
         --n_gcd|-g)
-			shift
-			NGCD=$1
-			;;
+            shift
+            NGCD=$1
+            ;;
         *)
         show_usage
         exit 1
         ;;
-	esac
-	shift
+    esac
+    shift
 done
