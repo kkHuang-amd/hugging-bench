@@ -1,15 +1,23 @@
 #!/bin/bash
 
-outdir=results/20221201a
+source $(dirname "${BASH_SOURCE[0]}")/load_execute_params.sh
+
+echo "Docker base image tag: ${BASE_DOCKER_TAG}"
+echo "Hugging-Bench Docker image tag: ${HB_DOCKER_TAG}"
+echo "Number of GCDs: ${NGCD}"
+echo "Output directory: ${OUTDIR}"
+
+# outdir=results/20221201a
 NUM_ITERATIONS=5
 
-mkdir -p ${outdir}
+# mkdir -p ${outdir}
+mkdir -p ${OUTDIR}
 
 if [ -f /bench/bin/sutinfo-gpuperf-main.pyz ]; then
-	sudo python3 /bench/bin/sutinfo-gpuperf-main.pyz -o ${outdir}/sutinfo.json
+	sudo python3 /bench/bin/sutinfo-gpuperf-main.pyz -o ${OUTDIR}/sutinfo.json
 fi
 
-docker build -f Dockerfile_cuda -t hugging-bench:cuda-latest .
+docker build --build-arg BASE_DOCKER_TAG=${BASE_DOCKER_TAG} -f Dockerfile_rocm -t hugging-bench:cuda-${HB_DOCKER_TAG} .
 
 for i in $(seq 1 $NUM_ITERATIONS); do
 	echo
@@ -18,7 +26,7 @@ for i in $(seq 1 $NUM_ITERATIONS); do
 	date
 	echo
 	for model in bart bert bloom deberta-v2-xxlarge distilbart-cnn distilbert-base gpt-neo gpt2 pegasus roberta-large t5-large; do
-		docker run --rm -it --gpus=all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 hugging-bench:cuda-latest scripts/run-${model}.sh | tee ${outdir}/${model}_${i}.log
-		python3 utils/logextract.py -f ${outdir}/${model}_${i}.log > ${outdir}/${model}_${i}.json
+		docker run --rm -it --gpus=all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 hugging-bench:cuda-latest scripts/run-${model}.sh | tee ${OUTDIR}/${model}_${i}.log
+		python3 utils/logextract.py -f ${OUTDIR}/${model}_${i}.log > ${OUTDIR}/${model}_${i}.json
 	done
-done | tee ${outdir}/run.log
+done | tee ${OUTDIR}/run.log
