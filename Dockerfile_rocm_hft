@@ -4,7 +4,7 @@ FROM ${BASE_DOCKER}
 
 WORKDIR /workspace
 
-RUN git clone --depth 1 --branch master https://github.com/huggingface/transformers.git \
+RUN git clone --depth 1 https://github.com/huggingface/transformers.git \
    && cd /workspace/transformers \
    && pip install -e . \
    && cd /workspace/transformers/examples/pytorch \
