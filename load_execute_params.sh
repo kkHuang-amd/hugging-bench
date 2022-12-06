@@ -3,7 +3,7 @@
 # Default parameters
 NGCD=8
 HB_DOCKER_TAG=latest
-outdir=results/latest
+OUTDIR=results/latest
 
 # User-defined parameters
 while [ ! -z "$1" ]; do
