@@ -26,7 +26,7 @@ for i in $(seq 1 $NUM_ITERATIONS); do
 	date
 	echo
 	for model in bart bert bloom deberta-v2-xxlarge distilbart-cnn distilbert-base gpt-neo gpt2 pegasus roberta-large t5-large; do
-		docker run --rm -it --gpus=all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 hugging-bench:cuda-latest scripts/run-${model}.sh --n_gcd ${NGCD} | tee ${OUTDIR}/${model}_${i}.log
+		docker run --rm -it --gpus=all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 hugging-bench:cuda-${HB_DOCKER_TAG} scripts/run-${model}.sh --n_gcd ${NGCD} | tee ${OUTDIR}/${model}_${i}.log
 		python3 utils/logextract.py -f ${OUTDIR}/${model}_${i}.log > ${OUTDIR}/${model}_${i}.json
 	done
 done | tee ${OUTDIR}/run.log
