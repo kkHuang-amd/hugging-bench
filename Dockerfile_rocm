@@ -1,5 +1,8 @@
-ARG BASE_DOCKER=rocm/pytorch:latest-release
-FROM ${BASE_DOCKER}
+# ARG BASE_DOCKER=rocm/pytorch:latest-release
+ARG BASE_DOCKER_IMAGE=rocm/pytorch
+ARG BASE_DOCKER_TAG=latest-release
+FROM ${BASE_DOCKER_IMAGE}:${BASE_DOCKER_TAG}
+# FROM rocm/pytorch:${BASE_DOCKER_TAG}
 
 WORKDIR /workspace
 
