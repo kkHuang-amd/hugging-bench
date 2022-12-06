@@ -3,6 +3,7 @@
 # Default parameters
 NGCD=8
 HB_DOCKER_TAG=latest
+outdir=results/latest
 
 # User-defined parameters
 while [ ! -z "$1" ]; do
@@ -16,6 +17,11 @@ while [ ! -z "$1" ]; do
         --hb_docker_tag|-t)
             shift
             HB_DOCKER_TAG=$1
+            ;;
+        # Output directory
+        --outdir|-o)
+            shift
+            OUTDIR=$1
             ;;
         # Number of GCDs
         --n_gcd|-g)
