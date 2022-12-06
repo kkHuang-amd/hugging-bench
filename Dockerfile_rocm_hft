@@ -1,0 +1,13 @@
+# Dockerfile for Hugging-Bench using the Transformers library from Hugging Face's official repo
+ARG BASE_DOCKER=rocm/pytorch:latest-release
+FROM ${BASE_DOCKER}
+
+WORKDIR /workspace
+
+RUN git clone --depth 1 --branch master https://github.com/huggingface/transformers.git \
+   && cd /workspace/transformers \
+   && pip install -e . \
+   && cd /workspace/transformers/examples/pytorch \
+   && pip install -r _tests_requirements.txt
+
+COPY scripts/ scripts
