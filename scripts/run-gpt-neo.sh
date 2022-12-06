@@ -13,8 +13,11 @@ case ${gpu_architecture} in
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
 esac
 
-NGCD=8
-export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
+# Load user-specified parameters
+source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
+
+# Print parameters
+echo "Number of GCDs: ${NGCD}"
 
 python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
     --output_dir output \
@@ -33,7 +36,7 @@ python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformer
     --per_device_train_batch_size=$batch_size \
     --overwrite_output_dir \
     --max_steps 150\
-     "$@" \
+    #  "$@" \
     2>&1 | tee log.txt
 
 # output performance metric
