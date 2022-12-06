@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(dirname "${BASH_SOURCE[0]}")/load_execute_params.sh
+source $(dirname "${BASH_SOURCE[0]}")/load_execute_params.sh $@
 
 echo "Docker base image tag: ${BASE_DOCKER_TAG}"
 echo "Hugging-Bench Docker image tag: ${HB_DOCKER_TAG}"
