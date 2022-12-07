@@ -22,6 +22,7 @@ source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
 echo "Number of GCDs: ${NGCD}"
 
 python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/question-answering/run_qa.py \
+       --cache_dir /data \
        --model_name_or_path roberta-large \
        --dataset_name squad \
        --do_train \

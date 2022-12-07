@@ -20,6 +20,7 @@ source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
 echo "Number of GCDs: ${NGCD}"
 
 python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/language-modeling/run_clm.py\
+    --cache_dir /data \
     --output_dir output \
     --model_name_or_path EleutherAI/gpt-neo-1.3B \
     --dataset_name wikitext \

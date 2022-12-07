@@ -22,6 +22,7 @@ source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
 echo "Number of GCDs: ${NGCD}"
 
 python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/summarization/run_summarization.py \
+        --cache_dir /data \
         --model_name_or_path sshleifer/distilbart-cnn-6-6 \
         --dataset_name xsum \
         --max_steps 150 \

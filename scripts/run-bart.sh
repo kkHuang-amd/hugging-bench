@@ -22,21 +22,22 @@ source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
 echo "Number of GCDs: ${NGCD}"
 
 python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/translation/run_translation.py \
+        --cache_dir /data \
         --dataset_name wmt16 \
-       --dataset_config ro-en \
-       --model_name_or_path facebook/bart-large \
-       --output_dir /tmp/tst-translation \
-       --do_train \
-       --label_smoothing 0.1 \
-       --logging_steps 1 \
-       --overwrite_output_dir \
-       --per_device_train_batch_size $batch_size \
-       --predict_with_generate \
-       --source_lang en \
-       --target_lang ro \
-       --warmup_steps 5 \
-       --fp16 \
-       --max_steps 150 \
-       --skip_memory_metrics=True \
+        --dataset_config ro-en \
+        --model_name_or_path facebook/bart-large \
+        --output_dir /tmp/tst-translation \
+        --do_train \
+        --label_smoothing 0.1 \
+        --logging_steps 1 \
+        --overwrite_output_dir \
+        --per_device_train_batch_size $batch_size \
+        --predict_with_generate \
+        --source_lang en \
+        --target_lang ro \
+        --warmup_steps 5 \
+        --fp16 \
+        --max_steps 150 \
+        --skip_memory_metrics=True \
     #    "$@" \
     # 2>&1 | tee log.txt

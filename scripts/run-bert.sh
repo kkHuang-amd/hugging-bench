@@ -22,6 +22,7 @@ source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
 echo "Number of GCDs: ${NGCD}"
 
 python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/language-modeling/run_mlm.py \
+    --cache_dir /data \
     --model_name_or_path bert-large-uncased \
     --dataset_name wikitext \
     --dataset_config_name wikitext-2-raw-v1 \

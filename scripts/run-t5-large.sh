@@ -22,6 +22,7 @@ source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
 echo "Number of GCDs: ${NGCD}"
 
 python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/translation/run_translation.py \
+	--cache_dir /data \
 	--source_prefix "translate English to Romanian:"  \
 	--dataset_name wmt16 \
 	--dataset_config ro-en \
