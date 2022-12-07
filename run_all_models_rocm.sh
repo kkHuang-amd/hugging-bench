@@ -10,7 +10,7 @@ echo "Output directory: ${OUTDIR}"
 NUM_ITERATIONS=5
 
 mkdir -p ${OUTDIR}
-mkdir cache_dir
+mkdir -p cache_dir
 
 if [ -f /bench/bin/sutinfo-gpuperf-main.pyz ]; then
 	sudo python3 /bench/bin/sutinfo-gpuperf-main.pyz -o ${OUTDIR}/sutinfo.json
