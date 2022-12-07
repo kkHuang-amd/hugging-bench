@@ -1,8 +1,6 @@
-# ARG BASE_DOCKER=rocm/pytorch:latest-release
 ARG BASE_DOCKER_IMAGE=rocm/pytorch
 ARG BASE_DOCKER_TAG=rocm5.4_ubuntu20.04_py3.8_pytorch_1.12.1
 FROM ${BASE_DOCKER_IMAGE}:${BASE_DOCKER_TAG}
-# FROM rocm/pytorch:${BASE_DOCKER_TAG}
 
 WORKDIR /workspace
 

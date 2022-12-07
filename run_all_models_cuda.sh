@@ -7,10 +7,8 @@ echo "Hugging-Bench Docker image tag: ${HB_DOCKER_TAG}"
 echo "Number of GCDs: ${NGCD}"
 echo "Output directory: ${OUTDIR}"
 
-# outdir=results/20221201a
 NUM_ITERATIONS=5
 
-# mkdir -p ${outdir}
 mkdir -p ${OUTDIR}
 mkdir cache_dir
 
