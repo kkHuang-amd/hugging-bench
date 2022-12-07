@@ -12,6 +12,7 @@ NUM_ITERATIONS=5
 
 # mkdir -p ${outdir}
 mkdir -p ${OUTDIR}
+mkdir cache_dir
 
 if [ -f /bench/bin/sutinfo-gpuperf-main.pyz ]; then
 	sudo python3 /bench/bin/sutinfo-gpuperf-main.pyz -o ${OUTDIR}/sutinfo.json
@@ -26,7 +27,7 @@ for i in $(seq 1 $NUM_ITERATIONS); do
 	date
 	echo
 	for model in bart bert bloom deberta-v2-xxlarge distilbart-cnn distilbert-base gpt-neo gpt2 pegasus roberta-large t5-large; do
-		docker run --name ${model} --rm -it --ipc=host --device /dev/dri --device /dev/kfd --security-opt seccomp=unconfined hugging-bench:${HB_DOCKER_TAG} scripts/run-${model}.sh --n_gcd ${NGCD} | tee ${OUTDIR}/${model}_${i}.log
+		docker run --name ${model} --rm -it --ipc=host --device /dev/dri --device /dev/kfd --security-opt seccomp=unconfined -v ${PWD}/cache_dir:/data hugging-bench:${HB_DOCKER_TAG} scripts/run-${model}.sh --n_gcd ${NGCD} | tee ${OUTDIR}/${model}_${i}.log
 		python3 utils/logextract.py -f ${OUTDIR}/${model}_${i}.log > ${OUTDIR}/${model}_${i}.json
 	done
 done | tee ${OUTDIR}/run.log
