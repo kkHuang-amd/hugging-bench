@@ -17,7 +17,7 @@ if [ -f /bench/bin/sutinfo-gpuperf-main.pyz ]; then
 	sudo python3 /bench/bin/sutinfo-gpuperf-main.pyz -o ${OUTDIR}/sutinfo.json
 fi
 
-docker build --build-arg BASE_DOCKER_TAG=${BASE_DOCKER_TAG} -f Dockerfile_rocm -t hugging-bench:cuda-${HB_DOCKER_TAG} .
+docker build --build-arg BASE_DOCKER_TAG=${BASE_DOCKER_TAG} -f Dockerfile_cuda -t hugging-bench:cuda-${HB_DOCKER_TAG} .
 
 for i in $(seq 1 $NUM_ITERATIONS); do
 	echo
