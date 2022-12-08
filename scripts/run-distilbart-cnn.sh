@@ -4,22 +4,23 @@ source $(dirname "${BASH_SOURCE[0]}")/detect-gpu.sh
 echo "GPU Vendor: ${gpu_vendor}"
 echo "GPU architecture: ${gpu_architecture}"
 
-case ${gpu_architecture} in
-    $MI200) batch_size=40;;
-    $MI100) batch_size=4;;
-    $MI50) batch_size=4;;
-    $A100) batch_size=20;;
-    $V100) batch_size=4;;
-    *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
-esac
-
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
 # Load user-specified parameters
 source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
 
+case ${gpu_architecture} in
+    $MI200) batch_size=${BATCH_SIZE:-40};;
+    $MI100) batch_size=${BATCH_SIZE:-4};;
+    $MI50) batch_size=${BATCH_SIZE:-4};;
+    $A100) batch_size=${BATCH_SIZE:-20};;
+    $V100) batch_size=${BATCH_SIZE:-4};;
+    *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
+esac
+
 # Print parameters
 echo "Number of GCDs: ${NGCD}"
+echo "Batch size: ${batch_size}"
 
 python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/summarization/run_summarization.py \
         --cache_dir /data \

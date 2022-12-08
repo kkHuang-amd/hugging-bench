@@ -11,6 +11,12 @@ while [ ! -z "$1" ]; do
             shift
             NGCD=$1
             ;;
+        # Number of GCDs
+        --batch_size|-bs)
+            shift
+            BATCH_SIZE=$1
+            ;;
+        #
         *)
         show_usage
         exit 1

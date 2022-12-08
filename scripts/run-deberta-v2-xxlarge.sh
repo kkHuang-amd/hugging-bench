@@ -4,15 +4,6 @@ source $(dirname "${BASH_SOURCE[0]}")/detect-gpu.sh
 echo "GPU Vendor: ${gpu_vendor}"
 echo "GPU architecture: ${gpu_architecture}"
 
-case ${gpu_architecture} in
-    $MI200) batch_size=64;;
-    $MI100) batch_size=24;;
-    $MI50) batch_size=1;;
-    $A100) batch_size=32;;
-    $V100) batch_size=1;;
-    *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
-esac
-
 # Workaround for https://ontrack-internal.amd.com/browse/SWDEV-317794
 # for var in "$@"; do 
 #     if [ "$var" == "--ort" ]; then
@@ -26,8 +17,18 @@ export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 # Load user-specified parameters
 source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
 
+case ${gpu_architecture} in
+    $MI200) batch_size=${BATCH_SIZE:-64};;
+    $MI100) batch_size=${BATCH_SIZE:-24};;
+    $MI50) batch_size=${BATCH_SIZE:-1};;
+    $A100) batch_size=${BATCH_SIZE:-32};;
+    $V100) batch_size=${BATCH_SIZE:-1};;
+    *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
+esac
+
 # Print parameters
 echo "Number of GCDs: ${NGCD}"
+echo "Batch size: ${batch_size}"
 
 python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/text-classification/run_glue.py \
 	--cache_dir /data \
