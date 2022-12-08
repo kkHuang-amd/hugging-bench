@@ -31,7 +31,7 @@ while [ ! -z "$1" ]; do
         # Number of iterations
         --iterations|-i)
             shift
-            ITERATIONS=$1
+            NUM_ITERATIONS=$1
             ;;
         # Models
         --models|-m)
