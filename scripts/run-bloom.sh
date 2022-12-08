@@ -40,6 +40,4 @@ python -m torch.distributed.launch --nproc_per_node=$n_gcd /workspace/transforme
     --per_device_train_batch_size=$batch_size \
     --per_device_eval_batch_size=$batch_size \
     --overwrite_output_dir \
-    --max_steps 150 \
-    #  "$@" \
-    # 2>&1 | tee log.txt
+    --max_steps 150

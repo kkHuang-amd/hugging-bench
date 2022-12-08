@@ -32,11 +32,4 @@ python -m torch.distributed.launch --nproc_per_node=$n_gcd /workspace/transforme
         --per_device_train_batch_size=$batch_size \
         --per_device_eval_batch_size=1 \
         --overwrite_output_dir \
-        --predict_with_generate \
-        # "$@" \
-        2>&1 | tee log.txt 
-
-# output performance metric
-performance=$(cat log.txt | grep -Eo "stable_train_samples_per_second':[^,]+" | sed "s/stable_train_samples_per_second': //g")
-
-echo "performance: $performance samples_per_second"
+        --predict_with_generate

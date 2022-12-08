@@ -39,11 +39,4 @@ python -m torch.distributed.launch --nproc_per_node=$n_gcd /workspace/transforme
     --skip_memory_metrics \
     --per_device_train_batch_size=$batch_size \
     --overwrite_output_dir \
-    --max_steps 150\
-    #  "$@" \
-    2>&1 | tee log.txt
-
-# output performance metric
-performance=$(cat log.txt | grep -Eo "stable_train_samples_per_second':[^,]+" | sed "s/stable_train_samples_per_second': //g")
-
-echo "performance: $performance samples_per_second"
+    --max_steps 150

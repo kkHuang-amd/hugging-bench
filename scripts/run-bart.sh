@@ -39,6 +39,4 @@ python -m torch.distributed.launch --nproc_per_node=$n_gcd /workspace/transforme
         --warmup_steps 5 \
         --fp16 \
         --max_steps 150 \
-        --skip_memory_metrics=True \
-    #    "$@" \
-    # 2>&1 | tee log.txt
+        --skip_memory_metrics=True

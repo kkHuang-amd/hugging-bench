@@ -4,14 +4,6 @@ source $(dirname "${BASH_SOURCE[0]}")/detect-gpu.sh
 echo "GPU Vendor: ${gpu_vendor}"
 echo "GPU architecture: ${gpu_architecture}"
 
-# Workaround for https://ontrack-internal.amd.com/browse/SWDEV-317794
-# for var in "$@"; do 
-#     if [ "$var" == "--ort" ]; then
-#         patch src/transformers/models/deberta_v2/modeling_deberta_v2.py deberta_softmax_backward.patch
-#         patch $HF_PATH/src/transformers/models/deberta_v2/modeling_deberta_v2.py deberta_softmax_backward.patch
-#     fi
-# done
-
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
 # Load user-specified parameters
@@ -43,11 +35,4 @@ python -m torch.distributed.launch --nproc_per_node=$n_gcd /workspace/transforme
 	--overwrite_output_dir \
 	--logging_steps 1 \
 	--fp16 \
-	--skip_memory_metrics=True \
-        # "$@" \
-    2>&1 | tee log-deberta-v2-xxlarge.txt
-
-# output performance metric
-performance=$(cat log-deberta-v2-xxlarge.txt | grep -Eo "stable_train_samples_per_second':[^,]+" | sed "s/stable_train_samples_per_second': //g")
-
-echo "performance: $performance samples_per_second"
+	--skip_memory_metrics=True
