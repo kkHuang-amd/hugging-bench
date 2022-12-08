@@ -10,11 +10,11 @@ export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
 
 case ${gpu_architecture} in
-    $MI200) batch_size=${BATCH_SIZE:-40};;
-    $MI100) batch_size=${BATCH_SIZE:-4};;
-    $MI50) batch_size=${BATCH_SIZE:-4};;
-    $A100) batch_size=${BATCH_SIZE:-20};;
-    $V100) batch_size=${BATCH_SIZE:-4};;
+    $MI200) batch_size=${batch_size:-40};;
+    $MI100) batch_size=${batch_size:-4};;
+    $MI50) batch_size=${batch_size:-4};;
+    $A100) batch_size=${batch_size:-20};;
+    $V100) batch_size=${batch_size:-4};;
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
 esac
 

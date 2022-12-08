@@ -14,7 +14,7 @@ while [ ! -z "$1" ]; do
         # Number of GCDs
         --batch_size|-bs)
             shift
-            BATCH_SIZE=$1
+            batch_size=$1
             ;;
         #
         *)
