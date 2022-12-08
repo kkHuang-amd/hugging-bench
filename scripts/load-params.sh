@@ -11,7 +11,7 @@ while [ ! -z "$1" ]; do
             shift
             n_gcd=$1
             ;;
-        # Number of GCDs
+        # Batch size
         --batch_size|-bs)
             shift
             batch_size=$1
