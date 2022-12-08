@@ -23,10 +23,30 @@ while [ ! -z "$1" ]; do
             shift
             OUTDIR=$1
             ;;
+        # Data cache directory
+        --cache_dir|-c)
+            shift
+            CACHEDIR=$1
+            ;;
+        # Number of iterations
+        --iterations|-i)
+            shift
+            ITERATIONS=$1
+            ;;
+        # Models
+        --models|-m)
+            shift
+            MODELS=$1
+            ;;
         # Number of GCDs
         --n_gcd|-g)
             shift
             NGCD=$1
+            ;;
+        # Batch size
+        --batch_size|-bs)
+            shift
+            BATCH_SIZE=$1
             ;;
         *)
         show_usage
