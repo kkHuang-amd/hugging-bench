@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Default parameters
-NGCD=8
-HB_DOCKER_TAG=latest
-OUTDIR=results/latest
-
 # User-defined parameters
 while [ ! -z "$1" ]; do
     case $1 in
