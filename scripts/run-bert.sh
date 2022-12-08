@@ -19,10 +19,10 @@ case ${gpu_architecture} in
 esac
 
 # Print parameters
-echo "Number of GCDs: ${NGCD}"
+echo "Number of GCDs: ${n_gcd}"
 echo "Batch size: ${batch_size}"
 
-python -m torch.distributed.launch --nproc_per_node=$NGCD /workspace/transformers/examples/pytorch/language-modeling/run_mlm.py \
+python -m torch.distributed.launch --nproc_per_node=$n_gcd /workspace/transformers/examples/pytorch/language-modeling/run_mlm.py \
     --cache_dir /data \
     --model_name_or_path bert-large-uncased \
     --dataset_name wikitext \

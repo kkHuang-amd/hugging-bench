@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Default parameters
-NGCD=8
+n_gcd=8
 
 # User-defined parameters
 while [ ! -z "$1" ]; do
@@ -9,7 +9,7 @@ while [ ! -z "$1" ]; do
         # Number of GCDs
         --n_gcd|-g)
             shift
-            NGCD=$1
+            n_gcd=$1
             ;;
         # Number of GCDs
         --batch_size|-bs)
