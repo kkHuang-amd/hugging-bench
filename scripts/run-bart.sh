@@ -9,6 +9,8 @@ export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 # Load user-specified parameters
 source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
 
+max_steps={max_steps:-150}
+
 case ${gpu_architecture} in
     $MI200) batch_size=${batch_size:-24};;
     $MI100) batch_size=${batch_size:-16};;
@@ -21,6 +23,7 @@ esac
 # Print parameters
 echo "Number of GCDs: ${n_gcd}"
 echo "Batch size: ${batch_size}"
+echo "Max steps: ${max_steps}"
 
 python -m torch.distributed.launch --nproc_per_node=$n_gcd /workspace/transformers/examples/pytorch/translation/run_translation.py \
         --cache_dir /data \
@@ -38,5 +41,5 @@ python -m torch.distributed.launch --nproc_per_node=$n_gcd /workspace/transforme
         --target_lang ro \
         --warmup_steps 5 \
         --fp16 \
-        --max_steps 150 \
+        --max_steps $max_steps \
         --skip_memory_metrics=True

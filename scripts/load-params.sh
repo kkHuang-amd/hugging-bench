@@ -16,6 +16,11 @@ while [ ! -z "$1" ]; do
             shift
             batch_size=$1
             ;;
+        # Maximum number of training steps
+        --max_steps|-s)
+            shift
+            max_steps=$1
+            ;;
         #
         *)
         show_usage
