@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Default parameters
-n_gcd=8
-
 # User-defined parameters
 while [ ! -z "$1" ]; do
     case $1 in
@@ -11,10 +8,15 @@ while [ ! -z "$1" ]; do
             shift
             n_gcd=$1
             ;;
-        # Number of GCDs
+        # Batch size
         --batch_size|-bs)
             shift
             batch_size=$1
+            ;;
+        # Maximum number of training steps
+        --max_steps|-s)
+            shift
+            max_steps=$1
             ;;
         #
         *)

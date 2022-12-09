@@ -1,14 +1,20 @@
 #!/bin/bash
+
+# Load user-specified params
+source $(dirname "${BASH_SOURCE[0]}")/load-params.sh "$@"
+# Load GPU information
 source $(dirname "${BASH_SOURCE[0]}")/detect-gpu.sh
 
-echo "GPU Vendor: ${gpu_vendor}"
-echo "GPU architecture: ${gpu_architecture}"
 
+# Container-specific Python path
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
-# Load user-specified parameters
-source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
 
+# Use default params if not specified by user
+max_steps=${max_steps:-150}
+n_gcd=${n_gcd:-1}
+
+# GPU-specific default params
 case ${gpu_architecture} in
     $MI200) batch_size=${batch_size:-40};;
     $MI100) batch_size=${batch_size:-4};;
@@ -19,14 +25,17 @@ case ${gpu_architecture} in
 esac
 
 # Print parameters
+echo "GPU Vendor: ${gpu_vendor}"
+echo "GPU architecture: ${gpu_architecture}"
 echo "Number of GCDs: ${n_gcd}"
 echo "Batch size: ${batch_size}"
+echo "Max steps: ${max_steps}"
 
 python -m torch.distributed.launch --nproc_per_node=$n_gcd /workspace/transformers/examples/pytorch/summarization/run_summarization.py \
         --cache_dir /data \
         --model_name_or_path sshleifer/distilbart-cnn-6-6 \
         --dataset_name xsum \
-        --max_steps 150 \
+        --max_steps $max_steps \
         --do_train \
         --output_dir /tmp/tst-summarization \
         --per_device_train_batch_size=$batch_size \
