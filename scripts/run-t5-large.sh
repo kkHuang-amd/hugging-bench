@@ -1,9 +1,6 @@
 #!/bin/bash
 source $(dirname "${BASH_SOURCE[0]}")/detect-gpu.sh
 
-echo "GPU Vendor: ${gpu_vendor}"
-echo "GPU architecture: ${gpu_architecture}"
-
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
 # Load user-specified parameters
@@ -21,6 +18,8 @@ case ${gpu_architecture} in
 esac
 
 # Print parameters
+echo "GPU Vendor: ${gpu_vendor}"
+echo "GPU architecture: ${gpu_architecture}"
 echo "Number of GCDs: ${n_gcd}"
 echo "Batch size: ${batch_size}"
 echo "Max steps: ${max_steps}"
