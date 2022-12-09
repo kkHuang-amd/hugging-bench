@@ -7,7 +7,7 @@ echo "GPU architecture: ${gpu_architecture}"
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
 # Load user-specified parameters
-source $(dirname "${BASH_SOURCE[0]}")/load-params.sh $@
+source $(dirname "${BASH_SOURCE[0]}")/load-params.sh "$@"
 
 max_steps={max_steps:-150}
 
