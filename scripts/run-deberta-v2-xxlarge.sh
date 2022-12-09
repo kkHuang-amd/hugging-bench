@@ -19,6 +19,7 @@ case ${gpu_architecture} in
     $MI200) batch_size=${batch_size:-64};;
     $MI100) batch_size=${batch_size:-24};;
     $MI50) batch_size=${batch_size:-1};;
+	$H100) batch_size=${batch_size:-32};;
     $A100) batch_size=${batch_size:-32};;
     $V100) batch_size=${batch_size:-1};;
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
