@@ -1,14 +1,20 @@
 #!/bin/bash
+
+# Load user-specified params
+source $(dirname "${BASH_SOURCE[0]}")/load-params.sh "$@"
+# Load GPU information
 source $(dirname "${BASH_SOURCE[0]}")/detect-gpu.sh
 
+
+# Container-specific Python path
 export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 
-# Load user-specified parameters
-source $(dirname "${BASH_SOURCE[0]}")/load-params.sh "$@"
 
-max_steps={max_steps:-150}
-n_gcd={n_gcd:-1}
+# Use default params if not specified by user
+max_steps=${max_steps:-150}
+n_gcd=${n_gcd:-1}
 
+# GPU-specific default params
 case ${gpu_architecture} in
     $MI200) batch_size=${batch_size:-20};;
     $MI100) batch_size=${batch_size:-1};;
