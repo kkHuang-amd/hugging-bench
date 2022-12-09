@@ -22,7 +22,7 @@ case ${gpu_architecture} in
     $H100) batch_size=${batch_size:-20};;
     $A100) batch_size=${batch_size:-20};;
     $V100) batch_size=${batch_size:-4};;
-    *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; exit 1;;
+    *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; batch_size=${batch_size:-1};;
 esac
 
 # Print parameters
