@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Default parameters
-n_gcd=8
-
 # User-defined parameters
 while [ ! -z "$1" ]; do
     case $1 in

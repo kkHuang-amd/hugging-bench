@@ -7,6 +7,7 @@ export PYTHONPATH=/workspace/transformers/src:${PATHONPATH}
 source $(dirname "${BASH_SOURCE[0]}")/load-params.sh "$@"
 
 max_steps={max_steps:-150}
+n_gcd={n_gcd:-1}
 
 case ${gpu_architecture} in
     $MI200) batch_size=${batch_size:-20};;
