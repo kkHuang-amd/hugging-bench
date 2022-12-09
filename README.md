@@ -29,12 +29,24 @@ run-bert.sh can be replaced with run-bart.sh, run-bloom.sh run-deberta-v2-xxlarg
 
 
 ## Running all models
-ROCm (`8` GCDs, rocm/pytorch base image tag `rocm5.4_ubuntu20.04_py3.8_pytorch_1.12.1`)
+ROCm example: all models; `2` iterations; `16` GCDs; `24` batch size; rocm/pytorch base image tag `rocm5.4_ubuntu20.04_py3.8_pytorch_1.12.1`
 ```
-./run_all_models_rocm.sh -g 8 -bt rocm5.4_ubuntu20.04_py3.8_pytorch_1.12.1
+./execute_rocm.sh -m "all" -i 2 -g 16 -bs 24 -bt rocm5.4_ubuntu20.04_py3.8_pytorch_1.12.1
 ```
 
-CUDA ((`8` GPUs, nvidia/pytorch base image tag `22.11-py3`))
+CUDA example: all models; `5` iterations; `8` GPUs; `16` batch size; nvidia/pytorch base image tag `22.11-py3`
 ```
-./run_all_models_cuda.sh -g 8 -bt 22.11-py3
+./execute_cuda.sh -m "all" -i 5 -g 8 -bs 16 -bt 22.11-py3
+```
+
+
+## Running specific models
+ROCm example: models BLOOM, PEGASUS, & T5-large; `2` iterations; `16` GCDs; `24` batch size; rocm/pytorch base image tag `rocm5.4_ubuntu20.04_py3.8_pytorch_1.12.1`
+```
+./execute_rocm.sh -m "bloom pegasus t5-large" -i 2 -g 16 -bs 24 -bt rocm5.4_ubuntu20.04_py3.8_pytorch_1.12.1
+```
+
+CUDA example: models BART & GPT-2; `5` iterations; `8` GPUs; `16` batch size; nvidia/pytorch base image tag `22.11-py3`
+```
+./execute_cuda.sh -m "bart gpt2" -i 5 -g 8 -bs 16 -bt 22.11-py3
 ```
