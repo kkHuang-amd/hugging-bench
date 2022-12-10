@@ -8,6 +8,7 @@ There are build_container_* scripts for building containers for both ROCm and CU
 ROCm:
 ```
 BASE_DOCKER_TAG=rocm5.3_ubuntu20.04_py3.7_pytorch_1.12.1 \
+HB_DOCKER_TAG=rocm-5.3 \
 ./build_container_rocm.sh
 ```
 
