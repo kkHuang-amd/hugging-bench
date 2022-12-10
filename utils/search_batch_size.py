@@ -129,13 +129,20 @@ def parse_args():
 
 def main():
     args = parse_args()
-    record = search_model_max_batch_size(model=args.model, n_gcd=args.n_gcd, max_steps=args.max_steps, batch_size_min=args.batch_size_min, batch_size_max=args.batch_size_max)
 
-    timestr = time.strftime("%Y%m%dT%H%M%S")
-    output_file = f'{args.output_dir}/search_batch_size-{timestr}.json'
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
-    with open(output_file, 'w') as file:
-        file.write(json.dumps(record, indent=4))
+    if args.model == "all":
+        models = ['bart', 'bert', 'bloom', 'deberta-v2-xxlarge', 'distilbart-cnn', 'distilbert-base', 'gpt-neo', 'gpt2', 'pegasus', 'roberta-large', 't5-large']
+    else:
+        models = [args.model]
+
+    for model in models:
+        timestr = time.strftime("%Y%m%dT%H%M%S")
+        record = search_model_max_batch_size(model=model, n_gcd=args.n_gcd, max_steps=args.max_steps, batch_size_min=args.batch_size_min, batch_size_max=args.batch_size_max)
+        
+        output_file = f'{args.output_dir}/search_bs-{timestr}.json'
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
+        with open(output_file, 'w') as file:
+            file.write(json.dumps(record, indent=4))
 
 
 if __name__ == '__main__':
