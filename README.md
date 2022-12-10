@@ -50,3 +50,25 @@ CUDA example: models BART & GPT-2; `5` iterations; `8` GPUs; `16` batch size; nv
 ```
 ./execute_cuda.sh -m "bart gpt2" -i 5 -g 8 -bs 16 -bt 22.11-py3
 ```
+
+
+## Batch size search
+ROCm:
+```
+docker build -f Dockerfile_rocm -t hugging-bench:latest .
+
+docker run --rm -it --name hb-bs --ipc=host --device /dev/dri --device /dev/kfd --security-opt seccomp=unconfined -v $(pwd)/utils:/workspace/utils -v $(pwd)/search_results:/workspace/search_results -v $HOME/data/hugging-bench:/data hugging-bench
+
+# In container
+python utils/search_batch_size.py -o /workspace/search_results/batch_size.json -m bart -g 8 -s 150 -lo 1 -hi 500 
+```
+
+CUDA:
+```
+docker build -f Dockerfile_cuda -t hugging-bench-cuda:latest .
+
+docker run --rm -it --gpus=all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -v $(pwd)/utils:/workspace/utils -v $(pwd)/search_results:/workspace/search_results -v $HOME/data/hugging-bench:/data hugging-bench-cuda
+
+# In container
+python utils/search_batch_size.py -o /workspace/search_results/batch_size.json -m bart -g 8 -s 150 -lo 1 -hi 500 
+```
