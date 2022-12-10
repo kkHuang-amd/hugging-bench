@@ -4,7 +4,7 @@ BASE_DOCKER_IMAGE=${BASE_DOCKER_IMAGE:-nvcr.io/nvidia/pytorch}
 BASE_DOCKER_TAG=${BASE_DOCKER_TAG:-22.11-py3}
 TRANSFORMERS_REPO=${TRANSFORMERS_REPO:-https://github.com/ROCmSoftwarePlatform/transformers}
 TRANSFORMERS_BRANCH_OR_TAG=${TRANSFORMERS_BRANCH_OR_TAG:-master}
-HB_DOCKER_TAG=${HB_DOCKER_TAG:-cuda-latest}
+HB_DOCKER_TAG=${HB_DOCKER_TAG:-latest}
 
 echo "Building pre-image"
 image=$(docker build \
@@ -32,5 +32,5 @@ echo "FROM ${image}" | docker build \
     --label "com.amd.image.pytorch.version=${pytorch_version}" \
     --label "com.amd.image.pytorch.version.full=${full_pytorch_version}" \
     --label "com.amd.image.build.info=hugging-bench rev ${huggingbench_rev}, pytorch ${full_pytorch_version}, transformers ${TRANSFORMERS_REPO} rev ${transformers_rev}" \
-    -t hugging-bench:${HB_DOCKER_TAG} \
+    -t hugging-bench-cuda:${HB_DOCKER_TAG} \
     -
