@@ -3,12 +3,12 @@
 source $(dirname "${BASH_SOURCE[0]}")/load_execute_params.sh "$@"
 source $(dirname "${BASH_SOURCE[0]}")/execute_common.sh
 
-BASE_DOCKER_TAG=${BASE_DOCKER_TAG:-22.11-py3}
-HB_DOCKER_TAG=${HB_DOCKER_TAG:-latest}
+export BASE_DOCKER_TAG=${BASE_DOCKER_TAG:-22.11-py3}
+export HB_DOCKER_TAG=${HB_DOCKER_TAG:-latest}
 
 
 # Build Docker image
-docker build --build-arg BASE_DOCKER_TAG=${BASE_DOCKER_TAG} -f Dockerfile_cuda -t hugging-bench-cuda:${HB_DOCKER_TAG} .
+./build_container_cuda.sh
 
 
 # Log execute parameters

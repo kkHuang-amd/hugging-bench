@@ -1,10 +1,14 @@
-ARG BASE_DOCKER_IMAGE=rocm/pytorch
-ARG BASE_DOCKER_TAG=rocm5.4_ubuntu20.04_py3.8_pytorch_1.12.1
-FROM ${BASE_DOCKER_IMAGE}:${BASE_DOCKER_TAG}
+ARG BASE_DOCKER_IMAGE=rocm/pytorch:latest-release
+FROM ${BASE_DOCKER_IMAGE}
+# ARGs need to be reset after a FROM
+ARG BASE_DOCKER_IMAGE
+
+ARG TRANSFORMERS_REPO=https://github.com/ROCmSoftwarePlatform/transformers
+ARG TRANSFORMERS_BRANCH_OR_TAG=master
 
 WORKDIR /workspace
 
-RUN git clone --depth 1 --branch master https://github.com/ROCmSoftwarePlatform/transformers \
+RUN git clone --depth 1 --branch ${TRANSFORMERS_BRANCH_OR_TAG} ${TRANSFORMERS_REPO}  \
    && cd /workspace/transformers \
    && pip install -e . \
    && cd /workspace/transformers/examples/pytorch \

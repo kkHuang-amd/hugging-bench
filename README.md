@@ -3,14 +3,18 @@ Dockerfiles and scripts for benchmarking Hugging Face models.
 
 ## Building Docker container
 
+There are build_container_* scripts for building containers for both ROCm and CUDA.  By default, both containers will use the master branch of the https://github.com/ROCmSoftwarePlatform/transformers repository and be based on a recent pytorch base container.  These details can be changed through environment variables.  See the scripts for a list of available environment variables.  For example:
+
 ROCm:
 ```
-docker build -f Dockerfile_rocm -t hugging-bench:latest .
+BASE_DOCKER_TAG=rocm5.3_ubuntu20.04_py3.7_pytorch_1.12.1 \
+./build_container_rocm.sh
 ```
 
 CUDA:
 ```
-docker build -f Dockerfile_cuda -t hugging-bench:cuda-latest .
+BASE_DOCKER_TAG=22.11-py3 \
+./build_container_cuda.sh
 ```
 
 ## Running Docker container
