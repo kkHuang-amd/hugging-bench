@@ -8,6 +8,16 @@ while [ ! -z "$1" ]; do
             shift
             BASE_DOCKER_TAG=$1
             ;;
+        # Transformers repo
+        --transformers_repo|-xr)
+            shift
+            TRANSFORMERS_REPO=$1
+            ;;
+        # Transformers repo branch or tag
+        --transformers_branch_or_tag|-xb)
+            shift
+            TRANSFORMERS_BRANCH_OR_TAG=$1
+            ;;
         # Hugging-Bench Docker image tag
         --hb_docker_tag|-t)
             shift
