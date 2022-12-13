@@ -10,6 +10,7 @@ echo "Building pre-image"
 image=$(docker build \
     --build-arg BASE_DOCKER_IMAGE=${BASE_DOCKER_IMAGE}:${BASE_DOCKER_TAG} \
     --build-arg TRANSFORMERS_REPO=${TRANSFORMERS_REPO} \
+    --build-arg TRANSFORMERS_BRANCH_OR_TAG=${TRANSFORMERS_BRANCH_OR_TAG} \
     -f Dockerfile_cuda \
     . | grep "Successfully built" | cut -d ' ' -f 3)
 echo "Built pre-image $image"
