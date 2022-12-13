@@ -1,16 +1,14 @@
-ARG BASE_DOCKER_IMAGE=nvcr.io/nvidia/pytorch
-ARG BASE_DOCKER_TAG=22.11-py3
-FROM ${BASE_DOCKER_IMAGE}:${BASE_DOCKER_TAG}
+ARG BASE_DOCKER_IMAGE=nvcr.io/nvidia/pytorch:22.11-py3
+FROM ${BASE_DOCKER_IMAGE}
+# ARGs need to be reset after a FROM
+ARG BASE_DOCKER_IMAGE
+
+ARG TRANSFORMERS_REPO=https://github.com/ROCmSoftwarePlatform/transformers
+ARG TRANSFORMERS_BRANCH_OR_TAG=master
 
 WORKDIR /workspace
 
-#RUN apt update \
-#   && apt install -y \
-#      python3-pip \
-#      python3-venv \
-#   && rm -rf /var/lib/apt/lists/*
-
-RUN git clone --depth 1 --branch master https://github.com/ROCmSoftwarePlatform/transformers \
+RUN git clone --depth 1 --branch ${TRANSFORMERS_BRANCH_OR_TAG} ${TRANSFORMERS_REPO} \
    && cd /workspace/transformers \
    && pip install wheel \
    && pip install -e . \
