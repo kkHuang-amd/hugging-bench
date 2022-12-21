@@ -77,3 +77,22 @@ docker run --rm -it --name hb-bs --gpus=all --ipc=host --ulimit memlock=-1 --uli
 # In container
 python utils/search_batch_size.py -odir /workspace/search_results -m bart -g 8 -s 150 -lo 1 -hi 500 
 ```
+
+
+
+## Note on batch sizes
+Default batch size values in the run scripts were chosen to maximize throughput for MI200 and A100 architectures.  The batch sizes for these were found through experimentation over multiple runs on systems with the various GPU architectures.
+
+Default values for MI200 systems were chosen specifically for MI250 UBB Gigabyte.  "Optimal" batch size values were close to or slightly smaller than the values found for MI250 UBB Supermicro and MI250X Hayabusa.
+
+Default batch size for NVIDIA A100 systems were chosen specifically for A100 DGX (80GB) systems.
+
+Default batch size for NVIDIA H100 systems were copied from A100 default values since memory size is the same.
+
+Default batch size for all other architectures were inherited from previous values identified in the ROCmSoftwarePlatform/DeepLearningModels repository.
+
+TODO: Add feature to adjust batch size for A100 40GB systems.  Batch size for NVIDA A100 40GB systems should be reduced (roughly half of batch size for DGX).
+
+TODO: Verify default batch size values for H100.
+
+TODO: Find and update default batch size values for MI100, MI50, V100.

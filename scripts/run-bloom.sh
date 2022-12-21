@@ -16,11 +16,11 @@ n_gcd=${n_gcd:-1}
 
 # GPU-specific default params
 case ${gpu_architecture} in
-    $MI200) batch_size=${batch_size:-2};;
+    $MI200) batch_size=${batch_size:-35};;
     $MI100) batch_size=${batch_size:-1};;
     $MI50) batch_size=${batch_size:-1};;
-    $H100) batch_size=${batch_size:-1};;
-    $A100) batch_size=${batch_size:-1};;
+    $H100) batch_size=${batch_size:-50};;
+    $A100) batch_size=${batch_size:-50};;
     $V100) batch_size=${batch_size:-1};;
     *) echo "Unrecognized GPU architecture: ${gpu_architecture}"; batch_size=${batch_size:-1};;
 esac
