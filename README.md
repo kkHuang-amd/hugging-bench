@@ -15,6 +15,7 @@ HB_DOCKER_TAG=rocm-5.3 \
 CUDA:
 ```
 BASE_DOCKER_TAG=22.11-py3 \
+HB_DOCKER_TAG=cuda-11.8 \
 ./build_container_cuda.sh
 ```
 
@@ -91,8 +92,8 @@ Default batch size for NVIDIA H100 systems were copied from A100 default values 
 
 Default batch size for all other architectures were inherited from previous values identified in the ROCmSoftwarePlatform/DeepLearningModels repository.
 
-TODO: Add feature to adjust batch size for A100 40GB systems.  Batch size for NVIDA A100 40GB systems should be reduced (roughly half of batch size for DGX).
+- TODO: Add feature to adjust batch size for A100 40GB systems.  Batch size for NVIDA A100 40GB systems should be reduced (roughly half of batch size for DGX).
 
-TODO: Verify default batch size values for H100.
+- TODO: Verify default batch size values for H100.
 
-TODO: Find and update default batch size values for MI100, MI50, V100.
+- TODO: Find and update default batch size values for MI100, MI50, V100.
